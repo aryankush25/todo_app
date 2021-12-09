@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
 import '../models/task_model.dart';
+import './add_edit_task_sheet.dart';
 
 class TaskList extends StatelessWidget {
   final List<TaskModel> taskList;
-  final Function toggleTask;
-  final Function deleteTask;
+
+  final void Function(String id) toggleTask;
+  final void Function(String id) deleteTask;
+  final void Function({
+    required String id,
+    String? title,
+    String? description,
+  }) editTask;
 
   const TaskList({
     Key? key,
     required this.taskList,
     required this.toggleTask,
     required this.deleteTask,
+    required this.editTask,
   }) : super(key: key);
 
   @override
@@ -27,8 +35,26 @@ class TaskList extends StatelessWidget {
             subtitle: Text(taskList[index].description),
             onChanged: (value) => toggleTask(taskList[index].id),
             secondary: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => deleteTask(taskList[index].id),
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (ctx) => AddEditTaskSheet(
+                    initialText: taskList[index].title,
+                    initialDescription: taskList[index].description,
+                    handleSubmit: ({
+                      required String title,
+                      required String description,
+                    }) {
+                      editTask(
+                        id: taskList[index].id,
+                        title: title,
+                        description: description,
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           );
         },

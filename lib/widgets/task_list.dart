@@ -16,10 +16,6 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return taskListBuilder();
-  }
-
-  Center taskListBuilder() {
     return Center(
       child: ListView.builder(
         itemCount: taskList.length,

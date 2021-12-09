@@ -11,8 +11,8 @@ class TaskModel {
     required this.id,
     required this.title,
     required this.description,
-    required this.isCompleted,
-    required this.todoList,
+    this.isCompleted = false,
+    this.todoList = const <TodoModel>[],
   });
 
   toggleCompleted() {

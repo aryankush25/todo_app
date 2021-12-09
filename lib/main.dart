@@ -37,8 +37,6 @@ class _MyHomePageState extends State<MyHomePage> {
       id: const Uuid().v1(),
       title: 'Make pizza!',
       description: 'Search for recipe on youtube.',
-      isCompleted: false,
-      todoList: [],
     ),
   ];
 
@@ -51,8 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
         id: const Uuid().v1(),
         title: title,
         description: description,
-        isCompleted: false,
-        todoList: [],
       ));
     });
   }

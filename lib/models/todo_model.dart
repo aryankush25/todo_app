@@ -6,7 +6,7 @@ class TodoModel {
   TodoModel({
     required this.id,
     required this.content,
-    required this.isDone,
+    this.isDone = false,
   });
 
   toggleDone() {

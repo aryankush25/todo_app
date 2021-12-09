@@ -60,9 +60,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _toggleTask(id) {
+    final itemToMarkCompleted = _taskList.firstWhere((item) => item.id == id);
+
     setState(() {
-      final itemToMarkCompleted = _taskList.firstWhere((item) => item.id == id);
       itemToMarkCompleted.toggleCompleted();
+    });
+  }
+
+  void _editTask(
+    id, {
+    title,
+    description,
+  }) {
+    final itemToEdit = _taskList.firstWhere((item) => item.id == id);
+
+    setState(() {
+      if (title) {
+        itemToEdit.title = title;
+      }
+      if (description) {
+        itemToEdit.description = description;
+      }
     });
   }
 

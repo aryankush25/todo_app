@@ -1,4 +1,4 @@
-import '../models/todo_model.dart';
+import './todo_model.dart';
 
 class TaskModel {
   String id;

@@ -85,30 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: TaskList(
-        taskList: taskList,
-        toggleTask: toggleTask,
-        deleteTask: deleteTask,
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            builder: addTaskModalBuilder,
-          );
-        },
-        tooltip: 'Add task',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
   Container addTaskModalBuilder(BuildContext context) {
     return Container(
       height: 400,
@@ -149,6 +125,30 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: TaskList(
+        taskList: taskList,
+        toggleTask: toggleTask,
+        deleteTask: deleteTask,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: addTaskModalBuilder,
+          );
+        },
+        tooltip: 'Add task',
+        child: const Icon(Icons.add),
       ),
     );
   }

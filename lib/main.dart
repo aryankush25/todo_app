@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/widgets/task_list.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/task_model.dart';
@@ -32,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<TaskModel> _taskList = [
+  final List<TaskModel> taskList = [
     TaskModel(
       id: const Uuid().v1(),
       title: 'Make pizza!',
@@ -43,9 +44,9 @@ class _MyHomePageState extends State<MyHomePage> {
   final titleInputController = TextEditingController();
   final descriptionInputController = TextEditingController();
 
-  void _addTask(title, description) {
+  void addTask(title, description) {
     setState(() {
-      _taskList.add(TaskModel(
+      taskList.add(TaskModel(
         id: const Uuid().v1(),
         title: title,
         description: description,
@@ -53,26 +54,26 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _deleteTask(id) {
+  void deleteTask(id) {
     setState(() {
-      _taskList.removeWhere((item) => item.id == id);
+      taskList.removeWhere((item) => item.id == id);
     });
   }
 
-  void _toggleTask(id) {
-    final itemToMarkCompleted = _taskList.firstWhere((item) => item.id == id);
+  void toggleTask(id) {
+    final itemToMarkCompleted = taskList.firstWhere((item) => item.id == id);
 
     setState(() {
       itemToMarkCompleted.toggleCompleted();
     });
   }
 
-  void _editTask(
+  void editTask(
     id, {
     title,
     description,
   }) {
-    final itemToEdit = _taskList.firstWhere((item) => item.id == id);
+    final itemToEdit = taskList.firstWhere((item) => item.id == id);
 
     setState(() {
       if (title) {
@@ -90,7 +91,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: taskListBuilder(),
+      body: TaskList(
+        taskList: taskList,
+        toggleTask: toggleTask,
+        deleteTask: deleteTask,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -131,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               child: const Text('Done'),
               onPressed: () {
-                _addTask(
+                addTask(
                   titleInputController.text,
                   descriptionInputController.text,
                 );
@@ -144,27 +149,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Center taskListBuilder() {
-    return Center(
-      child: ListView.builder(
-        itemCount: _taskList.length,
-        itemBuilder: (BuildContext buildContext, int index) {
-          return CheckboxListTile(
-            controlAffinity: ListTileControlAffinity.leading,
-            value: _taskList[index].isCompleted,
-            title: Text(_taskList[index].title),
-            subtitle: Text(_taskList[index].description),
-            onChanged: (value) => _toggleTask(_taskList[index].id),
-            secondary: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => _deleteTask(_taskList[index].id),
-            ),
-          );
-        },
       ),
     );
   }

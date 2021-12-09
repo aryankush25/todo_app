@@ -5,7 +5,7 @@ class TaskModel {
   String title;
   String description;
   bool isCompleted;
-  List<TodoModel> todoList;
+  final List<TodoModel> todoList;
 
   TaskModel({
     required this.id,

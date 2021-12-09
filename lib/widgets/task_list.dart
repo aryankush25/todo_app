@@ -42,6 +42,7 @@ class TaskList extends StatelessWidget {
                   builder: (ctx) => AddEditTaskSheet(
                     initialText: taskList[index].title,
                     initialDescription: taskList[index].description,
+                    deleteTask: () => deleteTask(taskList[index].id),
                     handleSubmit: ({
                       required String title,
                       required String description,

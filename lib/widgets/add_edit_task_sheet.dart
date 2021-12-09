@@ -5,12 +5,14 @@ class AddEditTaskSheet extends StatelessWidget {
     required String title,
     required String description,
   }) handleSubmit;
+  final void Function()? deleteTask;
   final TextEditingController titleInputController;
   final TextEditingController descriptionInputController;
 
   AddEditTaskSheet({
     Key? key,
     required this.handleSubmit,
+    this.deleteTask,
     initialText = '',
     initialDescription = '',
   })  : titleInputController = TextEditingController(text: initialText),
@@ -43,19 +45,36 @@ class AddEditTaskSheet extends StatelessWidget {
                 hintText: 'Enter description',
               ),
             ),
-            ElevatedButton(
-              child: const Text('Done'),
-              onPressed: () {
-                handleSubmit(
-                  title: titleInputController.text,
-                  description: descriptionInputController.text,
-                );
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: const Text('Done'),
+                  onPressed: () {
+                    handleSubmit(
+                      title: titleInputController.text,
+                      description: descriptionInputController.text,
+                    );
 
-                titleInputController.clear();
-                descriptionInputController.clear();
+                    titleInputController.clear();
+                    descriptionInputController.clear();
 
-                Navigator.pop(context);
-              },
+                    Navigator.pop(context);
+                  },
+                ),
+                if (deleteTask != null)
+                  ElevatedButton(
+                    child: const Text('Delete'),
+                    onPressed: () {
+                      deleteTask!();
+
+                      titleInputController.clear();
+                      descriptionInputController.clear();
+
+                      Navigator.pop(context);
+                    },
+                  ),
+              ],
             ),
           ],
         ),
